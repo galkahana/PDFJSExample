@@ -1,0 +1,64 @@
+.full-screen {
+    width:100vw;
+}
+
+.playground {
+    position:relative;
+    top:0;
+    left:0;
+}
+
+.playground-layer {
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+#toolbar {
+    position:fixed;
+    top:0;
+    left:0;
+    background:white;
+}
+
+#page-origin {
+    position:absolute;
+    top:0;
+    left:0;
+    width:5px;
+    height:5px;
+}
+
+.ui-resizable-se {
+    bottom: -3px;
+    right: -2px;
+}
+
+.text-field,
+.image-field {
+    border: 1px solid blue;
+    padding:0;
+    overflow:hidden;
+}
+
+.text-field {
+    background: transparent;
+    width:auto;    
+}
+
+.image-field {
+    width:200px;
+    background: transparent;
+}
+
+.text-area-wrapper,
+.image-wrapper {
+    padding:2px;
+    border: 1px solid green;
+}
+
+.text-area-remove,
+.image-remove   {
+    float: left;
+    line-height: 0.9;    
+}
