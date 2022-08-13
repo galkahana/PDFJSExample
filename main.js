@@ -1,6 +1,6 @@
 var $contentLayer = $('#content-layer'),
     $pdfpreviewCanvas = $('.pdf-preview>canvas'),
-    pdfURL = "https://www.gov.il/BlobFolder/service/cancelation_of_decleration_non_willing_to_be_an_israeli_citizen_given_to_a_minor/he/%D7%90%D7%964%20(1).pdf",
+    pdfURL = document.location + "OoPdfFormExample.pdf",
     ignoreClick = false;
 
 
@@ -97,8 +97,12 @@ function setupPreview() {
 
     global.PDFJS.workerSrc = './pdf.worker.js';
 
-  // Fetch the PDF document from the URL using promises.
-  api.getDocument('https://cors-anywhere.herokuapp.com/' + pdfURL).then(function (pdf) {
+    if(!pdfURL)
+        return
+
+
+  // Fetch the PDF document from the URL using promises. (applying cors header for external requests via general applier)
+  api.getDocument({ url: pdfURL.startsWith(document.location) ? pdfURL : 'https://corsanywhere.herokuapp.com/' + pdfURL}).then(function (pdf) {
     // Fetch the page.
     pdf.getPage(1).then(function (page) {
       var viewport = page.getViewport(kPageScale);
@@ -244,10 +248,7 @@ function screenToPt(x) {
 var kFontSize = 14;
 
 var defaultFontOptions = {
-                            "fontSource": {
-                                "name": "arial",
-                                "origin": "local"
-                            },
+                            "fontSource": "arial",
                             "size": screenToPt(kFontSize),
                             "color": "black"
                         };
@@ -366,8 +367,9 @@ function createPDF() {
     pdfJobTicket.document.embedded.pages[0].boxes = boxes;
     console.log(JSON.stringify(pdfJobTicket,null,2));
     
-    hummusService.generatePDFDocument(                            
-            '1UwbDEJb2APzg4427HYSfKYDQZRr-WlKdb0klChXYlRIch4FIUcMh5WfvnhepvP4NZbyC4LbIqjgmDzzDIP3gA',
+    hummusService.generatePDFDocument( 
+            "https://services.pdfhummus.com/api",
+            "rYRSxBuLEj+DT+5eSghl047kCBmLkk3kPPBozFyUyQuaL9VRlssbkYh2twVsjQIsfiKaAzjyYBleZmo0Th/Wa2k1rBrkNbFpvYdbVi4/ssCfJs53HF+P8NmmeLcv09+BS0aTN2xvMcBhfHeDA06CDiIf3esieRefUb+cXqNhWET4Vg4iayZMv0IM3kyiC+YTTosfEXd9CF5+HD47uNzhmBeh7tb+YmyUi98NqoBTfHoQQ0ltNbxaluTL/s1Q9wzQ6ElWN5TMDqeEJ0eXrMgLQlyXaQaIurOBcA7WIHyohtqpm+iyCnKaM93RaB89rSKbWiU3z8gFQfuYYfqV51jZmg==",
             pdfJobTicket,
             function(urlDownload,urlEmbed){
                 $('#result-download').attr('src',urlDownload);
