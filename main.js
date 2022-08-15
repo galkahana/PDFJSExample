@@ -257,7 +257,7 @@ var defaultFontOptions = {
 
 
 function fieldBoxesToPDFBoxes() {
-    return _.map($contentLayer.find('.text-field,.image-field'),function(item) {
+    return _.filter(_.map($contentLayer.find('.text-field,.image-field'),function(item) {
         var pageOrigin = $('#page-origin').offset();
             
         if(!pageOrigin) pageOrigin = {left:0,top:0};
@@ -265,6 +265,9 @@ function fieldBoxesToPDFBoxes() {
         if($(item).is('.text-field')) {
             // text field
             var textArea = item;
+
+            if(textArea.value.length == 0)
+                return null
 
             return createDefaultPDFTextBox(
                 screenToPt(textArea.offsetLeft + textArea.parentElement.offsetLeft + textArea.parentElement.parentElement.offsetLeft + 1 - pageOrigin.left),
@@ -287,7 +290,7 @@ function fieldBoxesToPDFBoxes() {
             )
         }
 
-    });
+    }), function(value){return !!value});
 }
 
 function createDefaultPDFTextBox(left,top,width,height,text,dir) {
