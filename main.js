@@ -361,8 +361,10 @@ function createPDF() {
     
     // text fields to boxes
     var boxes = fieldBoxesToPDFBoxes();
-    if(!boxes || boxes.length == 0)
+    if(!boxes || boxes.length == 0) {
+        alert("Create some boxes to generate a new PDF")
         return;
+    }
 
     pdfJobTicket.document.embedded.pages[0].boxes = boxes;
     console.log(JSON.stringify(pdfJobTicket,null,2));
@@ -373,9 +375,11 @@ function createPDF() {
             pdfJobTicket,
             function(urlDownload,urlEmbed){
                 $('#result-download').attr('src',urlDownload);
+                alert("new PDF created successfully")
             },
-            function(){
-                console.log('had error');
+            function(data){
+                console.log('had error' + data.statusMessage);
+                alert("There was an error creating the PDF: " + data.statusMessage)
             });   
 }
 
