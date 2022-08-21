@@ -381,8 +381,10 @@ function createPDF() {
                 alert("new PDF created successfully")
             },
             function(data){
-                console.log('had error' + data.statusMessage);
-                alert("There was an error creating the PDF: " + data.statusMessage)
+                var statusMessage = data.statusMessage || "No communication from https://services.pdfhummus.com/api. This probably mean that the backend is down. You can still play with the project by downloading the source code. review https://github.com/galkahana/hummus-services-redux. There's also a post explaining more about the project here - https://pdfhummus.com/post/692561869326761984/pdf-as-a-service"
+
+                console.log('had error' + statusMessage);
+                alert("There was an error creating the PDF: " + statusMessage)
             });   
 }
 
