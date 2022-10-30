@@ -102,7 +102,7 @@ function setupPreview() {
 
 
   // Fetch the PDF document from the URL using promises. (applying cors header for external requests via general applier)
-  api.getDocument({ url: pdfURL.startsWith(document.location) ? pdfURL : 'https://corsanywhere.herokuapp.com/' + pdfURL}).then(function (pdf) {
+  api.getDocument({ url: pdfURL.startsWith(document.location) ? pdfURL : 'https://hummus-cors.onrender.com/' + pdfURL}).then(function (pdf) {
     // Fetch the page.
     pdf.getPage(1).then(function (page) {
       var viewport = page.getViewport(kPageScale);
